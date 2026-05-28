@@ -1,0 +1,79 @@
+# Dependency folders
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Build folders
+build/
+dist/
+
+# React production files
+frontend/build/
+
+# Temporary files
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+# Uploaded resumes/documents
+uploads/
+
+# Coverage folder
+coverage/
+
+# Cache files
+.cache/
+
+# Parcel cache
+.parcel-cache/
+
+# Next.js
+.next/
+
+# Nuxt.js
+.nuxt/
+
+# Firebase cache
+.firebase/
+
+# MySQL dump files
+*.sql
+
+# Environment config
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Package lock optional
+package-lock.json
+
+# Yarn lock optional
+yarn.lock
