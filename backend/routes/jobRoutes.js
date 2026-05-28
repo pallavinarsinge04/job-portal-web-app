@@ -71,5 +71,4 @@ router.get("/:id", (req, res) => {
     res.json(result[0]);
   });
 });
-
 module.exports = router;
