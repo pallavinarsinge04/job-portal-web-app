@@ -67,7 +67,6 @@ router.get("/:id", (req, res) => {
         message: "Database Error",
       });
     }
-
     res.json(result[0]);
   });
 });
