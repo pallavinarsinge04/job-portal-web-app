@@ -6,29 +6,41 @@ const db = require("../config/db");
 
 const router = express.Router();
 
+
+// REGISTER USER
 router.post("/register", async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role } =
+      req.body;
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash Password
+    const hashedPassword =
+      await bcrypt.hash(password, 10);
 
+    // SQL Query
     const sql =
       "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
 
     db.query(
       sql,
-      [name, email, hashedPassword, role],
+      [
+        name,
+        email,
+        hashedPassword,
+        role,
+      ],
       (err, result) => {
         if (err) {
           console.log(err);
 
           return res.status(500).json({
-            message: "Database Error",
+            message: "Registration Failed",
           });
         }
 
         res.status(201).json({
-          message: "User Registered Successfully",
+          message:
+            "User Registered Successfully",
         });
       }
     );
@@ -41,18 +53,22 @@ router.post("/register", async (req, res) => {
   }
 });
 
+
+// LOGIN USER
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  const sql = "SELECT * FROM users WHERE email=?";
+  const sql =
+    "SELECT * FROM users WHERE email = ?";
 
   db.query(sql, [email], async (err, result) => {
     if (err) {
       return res.status(500).json({
-        message: "Database Error",
+        message: "Server Error",
       });
     }
 
+    // User Not Found
     if (result.length === 0) {
       return res.status(400).json({
         message: "User Not Found",
@@ -61,10 +77,12 @@ router.post("/login", (req, res) => {
 
     const user = result[0];
 
-    const isMatch = await bcrypt.compare(
-      password,
-      user.password
-    );
+    // Compare Password
+    const isMatch =
+      await bcrypt.compare(
+        password,
+        user.password
+      );
 
     if (!isMatch) {
       return res.status(400).json({
@@ -72,15 +90,19 @@ router.post("/login", (req, res) => {
       });
     }
 
+    // JWT Token
     const token = jwt.sign(
-      { id: user.id },
+      {
+        id: user.id,
+        role: user.role,
+      },
       process.env.JWT_SECRET,
       {
-        expiresIn: "7d",
+        expiresIn: "1d",
       }
     );
 
-    res.json({
+    res.status(200).json({
       token,
       user,
     });
